@@ -624,16 +624,23 @@ body {
     to { transform: scale(1.3); opacity: 0.8; }
 }
 
-/* ===== 3D PANDA CONTAINER ===== */
-.panda-3d-container {
-    position: absolute;
-    inset: 0;
+/* ===== CSS PANDA CHARACTER ===== */
+.panda-character {
+    position: relative;
     z-index: 2;
 }
-.panda-3d-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
+
+.panda-body {
+    position: relative;
+    width: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: idleBreathe 3s ease-in-out infinite;
+}
+@keyframes idleBreathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 /* Ears */
