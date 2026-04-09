@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PandaTravel AI — Your Animated Travel Companion</title>
+    <meta name="description" content="An AI-powered trip planner with an adorable animated panda guide that plans trips, books flights, and manages budgets through voice commands.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ambient Particles Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Splash / Loading Screen -->
+    <div class="splash-screen" id="splash-screen">
+        <div class="splash-panda">🐼</div>
+        <h1 class="splash-title">PandaTravel AI</h1>
+        <p class="splash-sub">Loading your travel companion...</p>
+        <div class="splash-loader"><div class="loader-bar"></div></div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-wrapper" id="app-wrapper" style="opacity:0;">
+        
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-earth-americas"></i></div>
+                <span class="logo-text">Panda<strong>Travel</strong></span>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item active" data-view="home" id="nav-home">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </li>
+                <li class="nav-item" data-view="planner" id="nav-planner">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Trip Plan</span>
+                </li>
+                <li class="nav-item" data-view="budget" id="nav-budget">
+                    <i class="fa-solid fa-coins"></i>
+                    <span>Budget</span>
+                </li>
+                <li class="nav-item" data-view="bookings" id="nav-bookings">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Bookings</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-badge">
+                    <i class="fa-solid fa-bolt"></i> AI Powered
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h1 class="page-title" id="page-title">Welcome Home</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-chip"><i class="fa-solid fa-location-dot"></i> <span id="current-dest">No destination</span></div>
+                    <div class="topbar-avatar">
+                        <img src="https://ui-avatars.com/api/?name=You&background=6366f1&color=fff&bold=true&size=64" alt="You" />
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="views-wrapper">
+
+                <!-- HOME VIEW -->
+                <section class="view active" id="view-home">
+                    <div class="hero-banner">
+                        <div class="hero-text">
+                            <h2>Where to next? 🌍</h2>
+                            <p>Talk to your Panda guide to start planning an unforgettable journey.</p>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-suitcase-rolling"></i>
+                                <div><strong id="stat-trips">0</strong><span>Trips</span></div>
+                            </div>
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-dollar-sign"></i>
+                                <div><strong id="stat-budget">$0</strong><span>Budget</span></div>
+                            </div>
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-plane-up"></i>
+                                <div><strong id="stat-bookings">0</strong><span>Bookings</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-cards">
+                        <div class="quick-card" data-action="plan-trip">
+                            <div class="qc-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                            <h3>Plan a Trip</h3>
+                            <p>Tell Panda your dream destination</p>
+                        </div>
+                        <div class="quick-card" data-action="set-budget">
+                            <div class="qc-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                            <h3>Set Budget</h3>
+                            <p>Allocate your travel funds wisely</p>
+                        </div>
+                        <div class="quick-card" data-action="book-ticket">
+                            <div class="qc-icon"><i class="fa-solid fa-plane-departure"></i></div>
+                            <h3>Book Tickets</h3>
+                            <p>Panda simulates finding the best deals</p>
+                        </div>
+                        <div class="quick-card" data-action="explore">
+                            <div class="qc-icon"><i class="fa-solid fa-compass"></i></div>
+                            <h3>Explore</h3>
+                            <p>Discover trending destinations</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PLANNER VIEW -->
+                <section class="view" id="view-planner">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-route"></i> Your Itinerary</h2>
+                    </div>
+                    <div class="itinerary-container" id="itinerary-container">
+                        <div class="empty-state">
+                            <i class="fa-regular fa-map"></i>
+                            <p>No itinerary yet. Ask Panda to plan a trip!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BUDGET VIEW -->
+                <section class="view" id="view-budget">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-coins"></i> Budget Breakdown</h2>
+                    </div>
+                    <div class="budget-overview" id="budget-overview">
+                        <div class="budget-total-card">
+                            <h3>Total Budget</h3>
+                            <div class="budget-amount" id="budget-amount">$0</div>
+                            <div class="budget-bar-wrap">
+                                <div class="budget-bar-fill" id="budget-bar-fill" style="width:0%"></div>
+                            </div>
+                            <div class="budget-remaining">Remaining: <strong id="budget-remaining">$0</strong></div>
+                        </div>
+                        <div class="expense-list" id="expense-list">
+                            <div class="empty-state">
+                                <i class="fa-regular fa-credit-card"></i>
+                                <p>No expenses yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BOOKINGS VIEW -->
+                <section class="view" id="view-bookings">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-ticket"></i> Your Bookings</h2>
+                    </div>
+                    <div class="bookings-list" id="bookings-list">
+                        <div class="empty-state">
+                            <i class="fa-regular fa-calendar-check"></i>
+                            <p>No bookings yet. Ask Panda to book something!</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- PANDA AGENT PANEL -->
+        <aside class="agent-panel" id="agent-panel">
+            
+            <!-- Panda Stage (Animated Character Area) -->
+            <div class="panda-stage" id="panda-stage">
+                <div class="panda-glow"></div>
+                <div class="panda-character" id="panda-character">
+                    <!-- CSS Animated Panda -->
+                    <div class="panda-body">
+                        <div class="panda-ear left"></div>
+                        <div class="panda-ear right"></div>
+                        <div class="panda-head">
+                            <div class="panda-face">
+                                <div class="eye-patch left">
+                                    <div class="panda-eye left" id="panda-eye-l">
+                                        <div class="pupil"></div>
+                                    </div>
+                                </div>
+                                <div class="eye-patch right">
+                                    <div class="panda-eye right" id="panda-eye-r">
+                                        <div class="pupil"></div>
+                                    </div>
+                                </div>
+                                <div class="panda-nose"></div>
+                                <div class="panda-mouth" id="panda-mouth"></div>
+                                <div class="panda-blush left"></div>
+                                <div class="panda-blush right"></div>
+                            </div>
+                        </div>
+                        <div class="panda-torso">
+                            <div class="panda-arm left" id="panda-arm-l"></div>
+                            <div class="panda-arm right" id="panda-arm-r"></div>
+                            <div class="panda-belly"></div>
+                        </div>
+                    </div>
+                    <!-- Action Indicators -->
+                    <div class="action-particles" id="action-particles"></div>
+                    <div class="speech-bubble" id="speech-bubble">
+                        <span id="bubble-text">Hi! I'm Panda! 🐼</span>
+                    </div>
+                </div>
+                <div class="panda-status-bar" id="panda-status">
+                    <span class="status-dot"></span>
+                    <span id="status-label">Ready to help!</span>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-section">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="msg panda-msg">
+                        <div class="msg-avatar">🐼</div>
+                        <div class="msg-content">Hello! I'm your Panda travel guide! 🎒 Try saying <em>"Plan a trip to Paris"</em> or type below!</div>
+                    </div>
+                </div>
+                <div class="chat-input-wrap">
+                    <input type="text" id="chat-input" placeholder="Tell Panda what you need..." autocomplete="off" />
+                    <button class="btn-voice" id="btn-voice" title="Speak to Panda">
+                        <i class="fa-solid fa-microphone"></i>
+                        <span class="voice-ring"></span>
+                    </button>
+                    <button class="btn-send" id="btn-send" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
