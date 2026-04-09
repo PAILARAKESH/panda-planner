@@ -15,8 +15,6 @@ const chatInput = document.getElementById('chat-input');
 const btnSend = document.getElementById('btn-send');
 const btnVoice = document.getElementById('btn-voice');
 
-const pandaBody = document.querySelector('.panda-body');
-const pandaMouth = document.getElementById('panda-mouth');
 const speechBubble = document.getElementById('speech-bubble');
 const bubbleText = document.getElementById('bubble-text');
 const statusLabel = document.getElementById('status-label');
@@ -144,6 +142,12 @@ const titles = { home: 'Welcome Home', planner: 'Trip Planner', budget: 'Budget 
 setTimeout(() => {
     splash.classList.add('hidden');
     appWrapper.style.opacity = '1';
+    
+    // Initialize 3D Panda
+    if (window.initPanda3D) {
+        initPanda3D('panda-3d-container');
+    }
+    
     setPandaState('waving');
     showBubble('Hiii~! I\'m Panda! 🐼💕');
     // Say hello with cute voice after voices load
@@ -191,25 +195,22 @@ quickCards.forEach(card => {
 
 // ====== Panda Animation Controller ======
 function setPandaState(st) {
-    pandaBody.classList.remove('waving', 'working', 'celebrating');
-    pandaMouth.classList.remove('talking', 'happy');
+    // Update 3D panda state
+    if (window.setPanda3DState) {
+        setPanda3DState(st);
+    }
     
     switch(st) {
         case 'waving':
-            pandaBody.classList.add('waving');
             statusLabel.textContent = '✨ Waving at you~!';
             break;
         case 'working':
-            pandaBody.classList.add('working');
             statusLabel.textContent = '🔧 Working on it~...';
             break;
         case 'talking':
-            pandaMouth.classList.add('talking');
             statusLabel.textContent = '🗣️ Speaking~...';
             break;
         case 'celebrating':
-            pandaBody.classList.add('celebrating');
-            pandaMouth.classList.add('happy');
             statusLabel.textContent = '🎉 Yaaay~!';
             spawnFloatingHearts();
             break;

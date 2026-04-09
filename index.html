@@ -179,43 +179,16 @@
         <!-- PANDA AGENT PANEL -->
         <aside class="agent-panel" id="agent-panel">
             
-            <!-- Panda Stage (Animated Character Area) -->
+            <!-- Panda Stage (3D Animated Character Area) -->
             <div class="panda-stage" id="panda-stage">
                 <div class="panda-glow"></div>
-                <div class="panda-character" id="panda-character">
-                    <!-- CSS Animated Panda -->
-                    <div class="panda-body">
-                        <div class="panda-ear left"></div>
-                        <div class="panda-ear right"></div>
-                        <div class="panda-head">
-                            <div class="panda-face">
-                                <div class="eye-patch left">
-                                    <div class="panda-eye left" id="panda-eye-l">
-                                        <div class="pupil"></div>
-                                    </div>
-                                </div>
-                                <div class="eye-patch right">
-                                    <div class="panda-eye right" id="panda-eye-r">
-                                        <div class="pupil"></div>
-                                    </div>
-                                </div>
-                                <div class="panda-nose"></div>
-                                <div class="panda-mouth" id="panda-mouth"></div>
-                                <div class="panda-blush left"></div>
-                                <div class="panda-blush right"></div>
-                            </div>
-                        </div>
-                        <div class="panda-torso">
-                            <div class="panda-arm left" id="panda-arm-l"></div>
-                            <div class="panda-arm right" id="panda-arm-r"></div>
-                            <div class="panda-belly"></div>
-                        </div>
-                    </div>
-                    <!-- Action Indicators -->
-                    <div class="action-particles" id="action-particles"></div>
-                    <div class="speech-bubble" id="speech-bubble">
-                        <span id="bubble-text">Hi! I'm Panda! 🐼</span>
-                    </div>
+                <div class="panda-3d-container" id="panda-3d-container">
+                    <!-- Three.js 3D Panda renders here -->
+                </div>
+                <!-- Action Indicators -->
+                <div class="action-particles" id="action-particles"></div>
+                <div class="speech-bubble" id="speech-bubble">
+                    <span id="bubble-text">Hi! I'm Panda! 🐼</span>
                 </div>
                 <div class="panda-status-bar" id="panda-status">
                     <span class="status-dot"></span>
@@ -243,6 +216,8 @@
         </aside>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="panda3d.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
